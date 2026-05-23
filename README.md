@@ -114,3 +114,4 @@ Instead of deploying a massive, mostly empty grid matrix (Adjacency Matrix), the
  Firstly edges now have weight i did it through adding new int inside edge class also changed constructor in the graph class 
 I also added new method so my code wouldn't crush if i had wrong values like doubles   (AddEdge) 
 I integrated dijkstra method It creates two tracking arrays (dist and visited) uses a simple loop to find the closest unvisited node updates the neighboring distances and prints the result block you verified earlier
+sdn
