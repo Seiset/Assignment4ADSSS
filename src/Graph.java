@@ -16,13 +16,17 @@ public class Graph {
         }
     }
 
-    public void addEdge(int u, int v) {
+    public void addEdge(int u, int v,int weight) {
         Vertex source = vertices[u];
         Vertex destination = vertices[v];
 
-        adj[u].add(new Edge(source, destination));
-        adj[v].add(new Edge(destination, source));
+        adj[u].add(new Edge(source, destination,weight));
+        adj[v].add(new Edge(destination, source,weight));
     }
+    public void addEdge(int u, int v) {
+        addEdge(u, v, 1);
+    }
+
 
     public void printGraph() {
         for (int v = 0; v < V; v++) {
@@ -67,6 +71,43 @@ public class Graph {
                     visited[neighborId] = true;
                     q.add(neighborId);
                 }
+            }
+        }
+    }
+
+    public void dijkstra(int start) {
+        int[] dist = new int[V];
+        boolean[] visited = new boolean[V];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[start] = 0;
+        for (int count = 0; count < V - 1; count++) {int u = -1;
+            int minDistance = Integer.MAX_VALUE;
+
+            for (int v = 0; v < V; v++) {
+                if (!visited[v] && dist[v] < minDistance) {
+                    minDistance = dist[v];
+                    u = v;
+                }
+            }
+            if (u == -1) break;
+            visited[u] = true;
+            for (int w = 0; w < adj[u].size(); w++) {
+                Edge edge = adj[u].get(w);
+                int neighborId = edge.getDestination().getId();
+                int weight = edge.getWeight();
+
+
+                if (!visited[neighborId] && dist[u] != Integer.MAX_VALUE
+                        && dist[u] + weight < dist[neighborId]) {
+                    dist[neighborId] = dist[u] + weight;
+                }
+            }
+        }System.out.println("Dijkstra Shortest Paths " + start + ":");
+        for (int i = 0; i < V; i++) {
+            if (dist[i] == Integer.MAX_VALUE) {
+                System.out.println("  To Vertex " + i + " -> Distance: Unreachable");
+            } else {
+                System.out.println("  To Vertex " + i + " -> Distance: " + dist[i]);
             }
         }
     }
